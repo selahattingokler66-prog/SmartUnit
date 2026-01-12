@@ -1,0 +1,68 @@
+:root {
+    --bg: #F5F6FA;
+    --glass: rgba(0, 0, 0, 0.03);
+    --primary: #6C5CE7;
+    --cyan: #00CEC9;
+    --text: #2D3436;
+    --sub-text: #636E72;
+    --nav-bg: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="dark"] {
+    --bg: #08080A;
+    --glass: rgba(255, 255, 255, 0.05);
+    --text: #FFFFFF;
+    --sub-text: #A1A1AA;
+    --nav-bg: rgba(20, 20, 22, 0.95);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+body { background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; display: flex; justify-content: center; transition: background 0.5s ease; }
+
+#app-container { width: 100%; max-width: 450px; display: flex; flex-direction: column; padding: 30px 20px; opacity: 0; transition: opacity 0.8s ease; }
+#app-container.ready { opacity: 1; }
+
+/* SPLASH SCREEN */
+#splash-screen { position: fixed; inset: 0; background: #08080A; z-index: 99999; display: flex; justify-content: center; align-items: center; transition: opacity 0.8s, visibility 0.8s; }
+.splash-content { text-align: center; }
+.splash-logo { width: 80px; height: 80px; background: var(--primary); border-radius: 25px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white; margin: 0 auto 20px; box-shadow: 0 20px 40px rgba(108, 92, 231, 0.3); }
+.loader-bar { width: 120px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 0 auto; position: relative; overflow: hidden; }
+.loader-bar::after { content: ''; position: absolute; left: -100%; width: 100%; height: 100%; background: var(--primary); animation: loadingProgress 2s infinite linear; }
+@keyframes loadingProgress { 0% { left: -100%; } 100% { left: 100%; } }
+
+/* HEADER & THEME TOGGLE */
+.converter-header { text-align: center; margin-bottom: 30px; transform: translateY(20px); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+#app-container.ready .converter-header { transform: translateY(0); }
+.theme-toggle { width: 45px; height: 45px; background: var(--glass); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; cursor: pointer; border: 1px solid rgba(0,0,0,0.05); color: var(--text); }
+#main-input { background: transparent; border: none; color: var(--text); font-size: 3.5rem; font-weight: 800; width: 100%; text-align: center; outline: none; }
+.category-pill { display: inline-flex; align-items: center; gap: 10px; background: var(--primary); color: white; padding: 8px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin-top: 10px; }
+
+/* RESULTS & ANIMATION */
+.results-area { flex: 1; overflow-y: auto; padding-bottom: 120px; scrollbar-width: none; }
+.unit-capsule { 
+    background: var(--glass); margin-bottom: 12px; padding: 18px 22px; border-radius: 35px; 
+    display: flex; justify-content: space-between; align-items: center; 
+    border: 1px solid rgba(255,255,255,0.03); opacity: 0; transform: translateX(30px);
+    transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); 
+}
+.unit-capsule.show { opacity: 1; transform: translateX(0); }
+.unit-info h2 { font-size: 1.4rem; font-weight: 700; }
+.unit-icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: bold; }
+
+/* COLORS */
+.cyan .unit-icon { background: rgba(0, 206, 201, 0.1); color: var(--cyan); }
+.purple .unit-icon { background: rgba(108, 92, 231, 0.1); color: var(--primary); }
+.gold .unit-icon { background: rgba(253, 203, 110, 0.1); color: #FDCB6E; }
+.pink .unit-icon { background: rgba(232, 67, 147, 0.1); color: #E84393; }
+
+/* NAV BAR (FIXED) */
+.nav-wrapper { position: fixed; bottom: 25px; left: 0; right: 0; display: flex; justify-content: center; pointer-events: none; }
+.bottom-nav { 
+    pointer-events: auto; background: var(--nav-bg); backdrop-filter: blur(15px); padding: 8px; 
+    border-radius: 50px; display: flex; gap: 8px; border: 1px solid rgba(128,128,128,0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2); transform: translateY(100px);
+    transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+#app-container.ready .bottom-nav { transform: translateY(0); }
+.nav-item { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--sub-text); font-size: 1.1rem; cursor: pointer; }
+.nav-item.active { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4); }
